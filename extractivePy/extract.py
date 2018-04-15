@@ -4,12 +4,19 @@ import nltk
 
 nltk.download('perluniprops')
 nltk.download('nonbreaking_prefixes')
+nltk.download('stopwords')
 
 from nltk.tokenize.moses import MosesTokenizer
 from typing import List
 
 output_dir = "../extracted/"
 data_dir = "../data/"
+
+from nltk.corpus import stopwords
+
+stopwords = set(stopwords.words('english'))
+
+print("Using stopwords: ", stopwords)
 
 
 def score_similarity(reference, sentence):
@@ -24,12 +31,18 @@ def score_similarity(reference, sentence):
     # print(br)
     # print(bs)
     for x in ts:
+        if x in stopwords:
+            continue
         if x in tr:
             # print("Matched unigram: " + str(x))
+            # tr.remove(x)
             score += len(x)
     for x in bs:
+        if x in stopwords:
+            continue
         if x in br:
             # print("Matched bigram: " + str(x))
+            # br.remove(x)
             score += 3 * (len(x[0]) + len(x[1]))
     return score
 
@@ -83,7 +96,6 @@ def parse(file_name: str, lines: List[str]) -> None:
     # for x in scores:
     #     print(str(scores[x]), x)
     # print(sorted)
-
 
     diff = 1
     i = 0
