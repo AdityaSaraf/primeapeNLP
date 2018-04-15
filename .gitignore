@@ -3,3 +3,5 @@
 cnn_stories/
 dailymail_stories/
 data/
+extracted/
+*.iml
