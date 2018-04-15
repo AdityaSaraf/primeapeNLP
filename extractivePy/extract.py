@@ -82,7 +82,7 @@ def parse(file_name: str, lines: List[str]) -> None:
             hit_highlight = False
             continue
 
-        print(x, x == "@highlight")
+        # print(x, x == "@highlight")
         if x == "@highlight":
             hit_highlight = True
             continue
@@ -115,7 +115,8 @@ def parse(file_name: str, lines: List[str]) -> None:
     last_score = scores[sorted[i]]
     counted = 0
 
-    while counted < len(highlights) or diff > 0.8 + 0.03 * counted:
+    limit = min(len(sorted), len(highlights))
+    while counted < limit or diff > 0.8 + 0.03 * counted:
         labels[sorted[i]] = 1
         counted += 1
         i += 1
@@ -134,5 +135,5 @@ def parse(file_name: str, lines: List[str]) -> None:
 
 
 if __name__ == "__main__":
-    # extract()
-    extract(["008fc24ca9f4c48a54623bef423a3f2f8db8451a.story"])
+    extract()
+    # extract(["008fc24ca9f4c48a54623bef423a3f2f8db8451a.story"])
