@@ -102,15 +102,15 @@ def parse(file_name: str, lines: List[str]) -> None:
     last_score = scores[sorted[i]]
     counted = 0
 
-    while counted < len(highlights) or diff > 0.8 + 0.02 * counted:
+    while counted < len(highlights) or diff > 0.8 + 0.03 * counted:
         labels[sorted[i]] = 1
         counted += 1
         i += 1
         next_score = scores[sorted[i]]
+        if next_score == 0:
+            break
         diff = next_score / last_score
         print("Diff:", diff, next_score, last_score)
-        if diff < 0.5:
-            break
         last_score = next_score
 
     with open(os.path.join(output_dir, file_name), "w+", encoding="utf-8") as f:
