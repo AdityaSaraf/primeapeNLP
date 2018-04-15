@@ -47,12 +47,20 @@ def score_similarity(reference, sentence):
     return score
 
 
-def extract() -> None:
+def extract(file_list=None) -> None:
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    for filename in os.listdir(data_dir):
-        if filename.endswith(".story"):
+    if file_list is None:
+        for filename in os.listdir(data_dir):
+            if filename.endswith(".story"):
+                path = os.path.join(data_dir, filename)
+                print("Path: " + path)
+                with open(path, "r", encoding="utf-8") as file:
+                    lines = file.readlines()
+                    parse(filename, lines)
+    else:
+        for filename in file_list:
             path = os.path.join(data_dir, filename)
             print("Path: " + path)
             with open(path, "r", encoding="utf-8") as file:
@@ -62,21 +70,26 @@ def extract() -> None:
 
 def parse(file_name: str, lines: List[str]) -> None:
     import re
-    hitHighlight: bool = False
+    hit_highlight: bool = False
     sentences = []
     highlights = []
     for x in lines:
         x = x.strip()
-        xs = re.split(r'[.?!"]\s+', x)
+        if len(x) == 0:
+            continue
+        if hit_highlight:
+            highlights.append(x)
+            hit_highlight = False
+            continue
+
+        print(x, x == "@highlight")
+        if x == "@highlight":
+            hit_highlight = True
+            continue
+        # xs = re.split(r'[.?!]\s+', x)
+        xs = re.split(r'(?<=[.?!])\s+', x)
         for x in xs:
-            if len(x) == 0:
-                continue
-            if hitHighlight:
-                highlights.append(x)
-                hitHighlight = False
-            elif x == "@highlight":
-                hitHighlight = True
-            else:
+            if len(x) > 0:
                 sentences.append(x)
     if len(highlights) == 0 or len(sentences) == 0:
         print("Skipping empty input.")
@@ -121,4 +134,5 @@ def parse(file_name: str, lines: List[str]) -> None:
 
 
 if __name__ == "__main__":
-    extract()
+    # extract()
+    extract(["008fc24ca9f4c48a54623bef423a3f2f8db8451a.story"])
