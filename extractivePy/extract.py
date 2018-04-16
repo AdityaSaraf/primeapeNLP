@@ -116,10 +116,14 @@ def parse(file_name: str, lines: List[str]) -> None:
     counted = 0
 
     limit = min(len(sorted), len(highlights))
-    while counted < limit or diff > 0.8 + 0.03 * counted:
+    while counted < limit:
+        if diff < 0.8 + 0.03 * counted:
+            break
+
         labels[sorted[i]] = 1
         counted += 1
         i += 1
+
         next_score = scores[sorted[i]]
         if next_score == 0:
             break

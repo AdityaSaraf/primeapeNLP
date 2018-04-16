@@ -26,10 +26,28 @@ The numbers are as follows:
 2 = Original highlight from the CNN/DailyMail dataset.
 ```
 
-Note: In some files in the original dataset, the highlights introduce new information. An example of this is file `008fc24ca9f4c48a54623bef423a3f2f8db8451a.story`, in which all four highlights introduce information entirely absent from the article. 
+A typical output file:
 
-Generated output for `008fc24ca9f4c48a54623bef423a3f2f8db8451a.story`:
+```
+1 Two extremely rare elephant twins have been born on a game reserve in south-east South Africa.
+0 The unnamed babies were spotted on the Pongola Game Reserve in Northern Kwa-Zulu Natal this week, watched over by their mother and the rest of the herd.
+1 Less than one per cent of elephants born are twins, and the last reported set  in the area born in 2006, to a cow in Kruger National Park.
+0 Scroll down for video
+0 Baby joy: The two adorable twin baby elephants and their mother, 31-year-old Curve, in South Africa
+1 The twins were born to Curve, a 31-year-old cow, and it is thought the father is Ingani, a 44-year-old elephant bull that died just over a year ago.
+0 Although the twins’ father is no longer in the picture, Curve is getting plenty of help from the rest of the herd in caring for her young ones.
+0 Pongola Game Reserve management have yet to establish the sex of the twins, as they are giving Curve space to nurse and feed her young ones to ensure they have the best start.
+0 ‘Mortality of one of the twins usually occurs as the increasing demand for milk by two calves cannot be met by the mother and the less dominant of the two calves usually cannot gain access to its share, so this is the best start,’ Elephant specialist, Dr
+0 Ian Whyte, formerly of the National Parks Board at Kruger National Park said.
+0 Helping hands: Curve takes her young twins to drink alongside another elephant cow and her young
+0 Camera shy: The twins hide behind their mother on the Pongola Game Reserve, South Africa
+0 Time to go: The twins and Curve are being left alone by reserve staff so the three can bond in peace
+2 Rare twin elephants born on South African game reserve
+2 Less than one per cent of elephants born are sets of twins
+2 Mother of twins are a 31-year-old cow named Curve
+```
 
+Note: In some files in the original dataset, the highlights introduce new information. An example of this is file `008fc24ca9f4c48a54623bef423a3f2f8db8451a.story`, in which all four highlights introduce information entirely absent from the article. Generated output for `008fc24ca9f4c48a54623bef423a3f2f8db8451a.story`:
 
 ```
 1 (CNN) -- Michael Jackson, the show-stopping singer whose best-selling albums -- including "Off the Wall," "Thriller" and "Bad" -- and electrifying stage presence made him one of the most popular artists of all time, died Thursday, CNN has confirmed.
