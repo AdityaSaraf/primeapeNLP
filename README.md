@@ -2,6 +2,8 @@
 
 # Training Setup
 
+**Note: Running the script to build the data for extractive summarization may take several hours. On my machine (Ryzen 1700x, 32GB RAM), it took just under  4 hours.**
+
 Make a `data/` folder in the root dir. This folder should contain `.story` files from the DeepMind Q&A Dataset built from CNN and DailyMail articles.
 
 Install `nltk` for `python`.
@@ -33,7 +35,7 @@ The NSW Government has decided to keep casino details public citing their disclo
 'Next week, the Greens will be moving to subpoena the missing documents, using the upper House call-for-papers process,' he said.
 ```
 
-This is a tradeoff that we are not able to measure - the default option is to respect line breaks in the original DailyMail & CNN dataset.
+This is a tradeoff that we are not able to measure, so the default option is to respect line breaks in the original DailyMail & CNN dataset.
 
 -----
 
