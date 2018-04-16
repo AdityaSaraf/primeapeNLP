@@ -8,6 +8,35 @@ Install `nltk` for `python`.
 
 Run `extractivePy/extract.py`. This will take some time, as it takes about `50ms` to process each file.
 
+-----
+
+**INCOMPLETE FEATURE**: Run `extract.py` with `some flag` to auto-merge lines. The base dataset is very messy and often has lines split arbitrarily.
+
+For example, the following sentence is split into 4 lines in the data set. This is a problem for extractive summarization models dependent on good sentence partitions.
+
+```
+'General
+medical facilities throughout Sierra Leone are currently under severe
+strain due to the Ebola outbreak, and unable to provide the same
+standard of healthcare as in the UK.
+```
+
+By running with `some flag`, the parser will combine all lines in the input data into a single line of text, and then split using the built-in regex.
+
+Note that this will cause some previously-correct sentences to be wrong, as not all sentences end with proper punctuation.
+
+For example, the following three sentences would be combined into a single sentence due to the lack of punctuation
+
+```
+Greens Upper House MP John Kaye, left,  will move to make the 'hidden' documents public during parliament next week
+The NSW Government has decided to keep casino details public citing their disclosure would damage its license 
+'Next week, the Greens will be moving to subpoena the missing documents, using the upper House call-for-papers process,' he said.
+```
+
+This is a tradeoff that we are not able to measure - the default option is to respect line breaks in the original DailyMail & CNN dataset.
+
+-----
+
 You should now have a folder in the root at `extracted/`.
 
 Extracted files have the following format:
