@@ -10,9 +10,9 @@ Run `extractivePy/extract.py`. This will take some time, as it takes about `50ms
 
 -----
 
-**INCOMPLETE FEATURE**: Run `extract.py` with `some flag` to auto-merge lines. The base dataset is very messy and often has lines split arbitrarily.
+**INCOMPLETE FEATURE**: Run `extract.py` with `some flag` to auto-merge lines. 
 
-For example, the following sentence is split into 4 lines in the data set. This is a problem for extractive summarization models dependent on good sentence partitions.
+The base dataset is very messy and often has lines split arbitrarily. For example, the following sentence is split into 4 lines in the data set. This is a problem for extractive summarization models dependent on good sentence partitions.
 
 ```
 'General
@@ -23,7 +23,7 @@ standard of healthcare as in the UK.
 
 By running with `some flag`, the parser will combine all lines in the input data into a single line of text, and then split using the built-in regex.
 
-Note that this will cause some previously-correct sentences to be wrong, as not all sentences end with proper punctuation.
+Note that this will cause some previously-correct sentences to be wrong, as not all sentences end with proper punctuation. Again, this is simply a limitation of the original abstractive summarization dataset that we are using to build our extractive summarization dataset.
 
 For example, the following three sentences would be combined into a single sentence due to the lack of punctuation
 
