@@ -2,7 +2,7 @@
 
 # Training Setup
 
-**Note: Running the script to build the data for extractive summarization may take several hours. On my machine (Ryzen 1700x, 32GB RAM), it took just under  4 hours.**
+**Note: Running the script to build the data for extractive summarization may take several hours. On my machine (Ryzen 1700x, 32GB 2933MHz RAM), it took just under  4 hours. The task is not currently multi-threaded, although it probably could be sped up if that were included.**
 
 Make a `data/` folder in the root dir. This folder should contain `.story` files from the DeepMind Q&A Dataset built from CNN and DailyMail articles.
 
