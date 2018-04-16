@@ -18,32 +18,31 @@ stopwords = set(stopwords.words('english'))
 
 print("Using stopwords: ", stopwords)
 
+m = MosesTokenizer()
+
 
 def score_similarity(reference, sentence):
-    m = MosesTokenizer()
-    tr = m.tokenize(reference)
-    ts = m.tokenize(sentence)
-    # print(tr)
-    # print(ts)
     score = 0
-    br = list(nltk.bigrams(tr))
-    bs = list(nltk.bigrams(ts))
-    # print(br)
-    # print(bs)
-    for x in ts:
+    ur = m.tokenize(reference)
+    us = m.tokenize(sentence)
+    br = list(nltk.bigrams(ur))
+    bs = list(nltk.bigrams(us))
+    tr = list(nltk.trigrams(ur))
+    ts = list(nltk.trigrams(us))
+    for x in us:
         if x in stopwords:
             continue
-        if x in tr:
-            # print("Matched unigram: " + str(x))
-            # tr.remove(x)
+        if x in ur:
             score += len(x)
+            # print("Matched unigram: " + str(x))
     for x in bs:
-        if x in stopwords:
-            continue
         if x in br:
-            # print("Matched bigram: " + str(x))
-            # br.remove(x)
             score += 3 * (len(x[0]) + len(x[1]))
+            # print("Matched bigram: " + str(x))
+    for x in ts:
+        if x in tr:
+            score += 5 * (len(x[0]) + len(x[1]) + len(x[2]))
+            # print("Matched trigram: " + str(x))
     return score
 
 
@@ -110,26 +109,31 @@ def parse(file_name: str, lines: List[str]) -> None:
     #     print(str(scores[x]), x)
     # print(sorted)
 
-    diff = 1
     i = 0
     last_score = scores[sorted[i]]
-    counted = 0
 
-    limit = min(len(sorted), len(highlights))
-    while counted < limit:
-        if diff < 0.8 + 0.03 * counted:
-            break
+    len_sorted = len(sorted) / 2
+    if len_sorted == 0:
+        len_sorted = len(sorted)
+    len_highlights = len(highlights)
 
+    while i < len_sorted:
         labels[sorted[i]] = 1
-        counted += 1
         i += 1
+
+        if i >= len_sorted:
+            break
 
         next_score = scores[sorted[i]]
         if next_score == 0:
             break
+
         diff = next_score / last_score
-        print("Diff:", diff, next_score, last_score)
+        print(" Diff:", diff, next_score, last_score)
         last_score = next_score
+
+        if i > len_highlights and diff < 0.8 + 0.03 * i:
+            break
 
     with open(os.path.join(output_dir, file_name), "w+", encoding="utf-8") as f:
         for x in sentences:
@@ -140,4 +144,8 @@ def parse(file_name: str, lines: List[str]) -> None:
 
 if __name__ == "__main__":
     extract()
-    # extract(["008fc24ca9f4c48a54623bef423a3f2f8db8451a.story"])
+    # extract([
+    #     "00a5c6a8b1b3bd07c52e0c64f09350e1190474a7.story",
+    #     "008fc24ca9f4c48a54623bef423a3f2f8db8451a.story",
+    #     "000064fee589e5607c1534a69f852d37b4936cca.story"
+    # ])
