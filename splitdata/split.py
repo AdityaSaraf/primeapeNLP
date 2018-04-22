@@ -20,9 +20,8 @@ test_dir = "../extracted/test"
 def read_names(dir=extract_dir):
     set = []
     for filename in os.listdir(dir):
-        if filename == '.':
-            continue
-        set.append((dir, filename))
+        if filename.endswith(".story"):
+            set.append((dir, filename))
     return set
 
 
@@ -88,8 +87,8 @@ if __name__ == "__main__":
     print("Reading file names...")
     names = read_names()
     print("Finished reading files.")
-    # train, dev, test = separate(names)
-    train, dev, test = separate(names, n1=0, n2=31198, n3=46795)
+    train, dev, test = separate(names)
+    # train, dev, test = separate(names, n1=0, n2=0, n3=46795)
     print("Created train, dev, and test sets of sizes:", len(train), len(dev), len(test))
     print("Moving train...")
     move(train, train_dir)
