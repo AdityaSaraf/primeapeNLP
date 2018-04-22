@@ -2,7 +2,6 @@
 
 # Training Setup
 
-**Note: Running the script to build the data for extractive summarization may take several hours. On my machine (Ryzen 1700x, 32GB 2933MHz RAM), it took just under  4 hours. The task is not currently multi-threaded, although it probably could be sped up if that were included.**
 
 ### Step 1
 
@@ -16,7 +15,7 @@ Install `nltk` for `python`.
 
 ### Step 3
 
-Run `extractivePy/extract.py`. This will take some time, as it takes about `50ms` to process each file. On my SSD it took just under 4 hours.
+Run `extractivePy/extract.py`. This will take some time, as it takes about `50ms` to process each file. On my machine (Ryzen 1700x, 32GB 2933MHz RAM), it took just under 4 hours total. The task is currently not multi-threaded.
 
 This script will create folder in the root at `extracted/`.
 
