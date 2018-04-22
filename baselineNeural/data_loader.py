@@ -1,10 +1,9 @@
 import logging
-
-import numpy as np
-from tqdm import tqdm
 import mmap
 
-import torch
+import numpy as np
+from nltk.tokenize.moses import MosesTokenizer
+from tqdm import tqdm
 
 GLOVE_URL = "../glove/glove.6B.50d.txt"
 
@@ -21,11 +20,10 @@ def load_glove(url=GLOVE_URL):
     """
     glove_embeddings = {}
     embedding_dim = None
-
     logger.info("Reading GloVe embeddings from {}".format(url))
-    vocab_size = get_num_lines(url)
+
     with open(url, encoding="utf-8") as glove_file:
-        for line in tqdm(glove_file, total=vocab_size):
+        for line in tqdm(glove_file, total=get_num_lines(url)):
             fields = line.strip().split(" ")
             word = fields[0]
             vector = np.asarray(fields[1:], dtype="float32")
@@ -34,39 +32,45 @@ def load_glove(url=GLOVE_URL):
             else:
                 assert embedding_dim == len(vector)
             glove_embeddings[word] = vector
+    return glove_embeddings
 
-    all_embeddings = np.asarray(list(glove_embeddings.values()))
-    embeddings_mean = float(np.mean(all_embeddings))
-    embeddings_std = float(np.std(all_embeddings))
-    logger.info("Initializing {}-dimensional pretrained embeddings".format(embedding_dim))
-    embedding_matrix = torch.FloatTensor(vocab_size, embedding_dim).normal_(embeddings_mean, embeddings_std)
-    # Manually zero out the embedding of the padding token (0).
-    # embedding_matrix[0].fill_(0)
-    # This starts from 1 because 0 is the padding token, which
-    # we don't want to modify.
+
+def load_train(url=TRAIN_URL, debug=False):
+    return _load_inputs(url, debug)
+
+
+def load_dev(url=DEV_URL, debug=False):
+    return _load_inputs(url, debug)
+
+
+def load_test(url=TEST_URL, debug=False):
+    return _load_inputs(url, debug)
+
+
+def _load_inputs(url, debug=False):
+    m = MosesTokenizer()
+    import os
+    result = []
     i = 0
-    for word in glove_embeddings:
-        # If we don't have a pre-trained vector for this word,
-        # we don't change the row and the word has random initialization.
-        embedding_matrix[i] = torch.FloatTensor(glove_embeddings[word])
+    for filename in tqdm(os.listdir(url)):
         i += 1
-    return embedding_matrix
-
-
-def load_train(url=TRAIN_URL):
-    return _load_inputs(url)
-
-
-def load_dev(url=DEV_URL):
-    return _load_inputs(url)
-
-
-def load_test(url=TEST_URL):
-    return _load_inputs(url)
-
-
-def _load_inputs(url):
-    pass
+        if debug and i > 1000:
+            break
+        if filename.endswith(".story"):
+            curr_l = []
+            curr_t = []
+            path = os.path.join(url, filename)
+            with open(path, "r", encoding="utf-8") as file:
+                for line in file:
+                    label = int(line[:2].strip())
+                    if label == 2:
+                        continue
+                    text = line[2:].strip()
+                    tokens = m.tokenize(text)
+                    curr_l.append(label)
+                    curr_t.append(tokens)
+            result.append((curr_t, curr_l))
+    return result
 
 
 def get_num_lines(file_path):
