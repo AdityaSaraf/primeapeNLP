@@ -5,3 +5,5 @@ dailymail_stories/
 data/
 extracted/
 *.iml
+glove/
+*.pyc
