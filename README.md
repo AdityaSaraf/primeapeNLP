@@ -4,7 +4,7 @@
   * [Additional Setup Notes](#additional-setup-notes)
 * [Dataset Format](#dataset-format)
 
-# Training Setup
+## Training Setup
 
 ### Step 1
 
@@ -32,7 +32,7 @@ The final folders will be at `extracted/train`, `extracted/dev`, and `extracted/
 
 -
 
-## Additional Setup Notes
+### Additional Setup Notes
 
 -----
 
@@ -63,7 +63,7 @@ This is a tradeoff that we are not able to measure, so the default option is to 
 
 -----
 
-# Dataset Format
+## Dataset Format
 
 Extracted files have the following format:
 
