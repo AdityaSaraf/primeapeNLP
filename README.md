@@ -1,7 +1,10 @@
 # PrimeapeNLP
 
-# Training Setup
+* [Training Setup](#training-setup)
+  * [Additional Setup Notes](#additional-setup-notes)
+* [Dataset Format](#dataset-format)
 
+# Training Setup
 
 ### Step 1
 
