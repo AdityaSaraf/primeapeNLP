@@ -4,11 +4,33 @@
 
 **Note: Running the script to build the data for extractive summarization may take several hours. On my machine (Ryzen 1700x, 32GB 2933MHz RAM), it took just under  4 hours. The task is not currently multi-threaded, although it probably could be sped up if that were included.**
 
+### Step 1
+
 Make a `data/` folder in the root dir. This folder should contain `.story` files from the DeepMind Q&A Dataset built from CNN and DailyMail articles.
+
+See [here](https://github.com/abisee/cnn-dailymail) for instructions on obtaining that dataset.
+
+### Step 2
 
 Install `nltk` for `python`.
 
-Run `extractivePy/extract.py`. This will take some time, as it takes about `50ms` to process each file.
+### Step 3
+
+Run `extractivePy/extract.py`. This will take some time, as it takes about `50ms` to process each file. On my SSD it took just under 4 hours.
+
+This script will create folder in the root at `extracted/`.
+
+### Step 4
+
+Run `splitdata/split.py`. This will split the data into training, development (validation), and test sets.
+
+The final folders will be at `extracted/train`, `extracted/dev`, and `extracted/test`.
+
+### Step 5
+
+-
+
+## Additional Setup Notes
 
 -----
 
@@ -39,7 +61,7 @@ This is a tradeoff that we are not able to measure, so the default option is to 
 
 -----
 
-You should now have a folder in the root at `extracted/`.
+# Dataset Format
 
 Extracted files have the following format:
 
@@ -78,7 +100,7 @@ A typical output file:
 2 Mother of twins are a 31-year-old cow named Curve
 ```
 
-Note: In some files in the original dataset, the highlights introduce new information. An example of this is file `008fc24ca9f4c48a54623bef423a3f2f8db8451a.story`, in which all four highlights introduce information entirely absent from the article. Generated output for `008fc24ca9f4c48a54623bef423a3f2f8db8451a.story`:
+Note: In some files in the original dataset, the highlights introduce new information. An example of this is file `008fc24ca9f4c48a54623bef423a3f2f8db8451a.story`, in which all four highlights introduce information entirely absent from the article. The generated output for `008fc24ca9f4c48a54623bef423a3f2f8db8451a.story` is as follows:
 
 ```
 1 (CNN) -- Michael Jackson, the show-stopping singer whose best-selling albums -- including "Off the Wall," "Thriller" and "Bad" -- and electrifying stage presence made him one of the most popular artists of all time, died Thursday, CNN has confirmed.
