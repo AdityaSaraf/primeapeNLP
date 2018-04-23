@@ -7,8 +7,14 @@ from baselineNeural.data_loader import *
 
 
 class Net(nn.Module):
-    def __init__(self):
+    def __init__(self, embedding_dim, input_dim, hidden_size):
         super(Net, self).__init__()
+        self.grus = [nn.GRU(input_size=self.embedding_dim,
+                            hidden_size=self.hidden_size,
+                            batch_first=True)
+                     for _ in range(input_dim)]
+        for _ in range(input_dim)
+
         self.conv1 = nn.Conv2d(3, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(6, 16, 5)
@@ -26,60 +32,71 @@ class Net(nn.Module):
         return x
 
 
-net = Net()
-
-
 def embed(glove, train):
     embed_dimensions = len(next(iter(glove.values())))
-    unk = np.zeros(embed_dimensions, dtype="float32")
+    # unk = np.zeros(embed_dimensions, dtype="float32")
     new_data = []
-    longest = 0
-    longest_sentence = 0
+    longest_sentence_count = 0
+    longest_word_count = 0
     for data in train:
-        inputs, labels = data
-        if len(inputs) > longest:
-            longest = len(inputs)
-        embed_inputs = []
-        for input in inputs:
-            embed_input = []
-            if len(input) > longest_sentence:
-                longest_sentence = len(input)
-            for word in input:
+        # one document
+        sentences, labels = data
+        # track highest num of sentences in a doc
+        if len(sentences) > longest_sentence_count:
+            longest_sentence_count = len(sentences)
+        embedded_sentences = []
+        for sentence in sentences:
+            # convert sentences to list of word embeddings
+            embedded_sentence = []
+            # track longest sentence length
+            if len(sentence) > longest_word_count:
+                longest_word_count = len(sentence)
+            # embed word
+            for word in sentence:
                 if word in glove:
-                    embed_input.append(np.array(glove[word], dtype="float32"))
+                    embedded_sentence.append(glove[word])
                 else:
-                    embed_input.append(unk)
-            embed_inputs.append(embed_input)
-        new_data.append((np.array(embed_inputs), labels))
+                    embedded_sentence.append([0 for _ in range(embed_dimensions)])
+            # save embedded sentence
+            embedded_sentences.append(embedded_sentence)
+        # store tuple of embedded sentences and labels
+        new_data.append((embedded_sentences, labels))
+    # tensor_data converts everything to tensors
     tensor_data = []
-    print("LONGEST", longest)
-    for inputs, labels in tqdm(new_data):
-        while len(inputs) < longest:
-            inputs = np.append(inputs, [unk])
-            # inputs.append([unk])
-        for input in inputs:
-            while len(input) < longest_sentence:
-                input.append(unk)
-        while len(labels) < longest:
+    for sentences, labels in tqdm(new_data):
+        # print(sentences)
+        # print(sentences is None)
+        # print(len(sentences))
+        # length = len(sentences)
+        # print("length", length)
+        # pad number of sentences in doc
+        while len(sentences) < longest_sentence_count:
+            # default sentence = list of a single unk word
+            sentences.append([[0 for _ in range(embed_dimensions)]])
+        # pad labels to match above
+        while len(labels) < longest_sentence_count:
             labels.append(0)
-        print(inputs[0])
-        print(inputs[1])
-        print("lens", len(inputs), len(labels), len(inputs[0]), len(inputs[1]))
-        tensor1 = torch.FloatTensor(inputs)
+        # pad sentences to match longest sentence
+        for sentence in sentences:
+            while len(sentence) < longest_word_count:
+                sentence.append([0 for _ in range(embed_dimensions)])
+        print("lens", len(sentences), len(labels), len(sentences[0]), len(sentences[1]))
+        tensor1 = torch.FloatTensor(sentences)
         tensor2 = torch.IntTensor(labels)
         tensor_data.append((tensor1, tensor2))
     print("Finished embeddings.")
-    return new_data
+    return tensor_data
 
 
 if __name__ == "__main__":
     print("Loading GLoVe vectors.")
-    glove = load_glove()
+    embedding_dim, glove = load_glove()
     print("Loading training data.")
     train = load_train(debug=True)
     train = embed(glove, train)
 
     criterion = nn.CrossEntropyLoss()
+    net = Net(embedding_dim=embedding_dim, input_dim=len(train), hidden_size=32)
     optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
     for epoch in range(2):  # loop over the dataset multiple times
@@ -87,19 +104,26 @@ if __name__ == "__main__":
         for i, data in enumerate(train):
             # get the inputs
             inputs, labels = data
+            print(inputs)
+            print(labels)
 
             # wrap them in Variable
-            inputs, labels = Variable(inputs), Variable(labels)
+            inputs = Variable(inputs)
+            labels = Variable(labels)
 
+            print("zero param gradients")
             # zero the parameter gradients
             optimizer.zero_grad()
 
+            print("forward backward opt")
             # forward + backward + optimize
             outputs = net(inputs)
 
+            print("loss back")
             loss = criterion(outputs, labels)
             loss.backward()
 
+            print("step")
             optimizer.step()
 
             # print statistics

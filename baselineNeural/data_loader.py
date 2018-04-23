@@ -26,13 +26,17 @@ def load_glove(url=GLOVE_URL):
         for line in tqdm(glove_file, total=get_num_lines(url)):
             fields = line.strip().split(" ")
             word = fields[0]
-            vector = np.asarray(fields[1:], dtype="float32")
+            vals = []
+            for x in fields[1:]:
+                vals.append(float(x))
+            # vector = np.asarray(fields[1:], dtype="float32")
+            vector = vals
             if embedding_dim is None:
                 embedding_dim = len(vector)
             else:
                 assert embedding_dim == len(vector)
             glove_embeddings[word] = vector
-    return glove_embeddings
+    return embedding_dim, glove_embeddings
 
 
 def load_train(url=TRAIN_URL, debug=False):
@@ -54,7 +58,7 @@ def _load_inputs(url, debug=False):
     i = 0
     for filename in tqdm(os.listdir(url)):
         i += 1
-        if debug and i > 1000:
+        if debug and i > 100:
             break
         if filename.endswith(".story"):
             curr_l = []
