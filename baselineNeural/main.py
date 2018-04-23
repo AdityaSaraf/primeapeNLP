@@ -1,35 +1,65 @@
+import mmap
+
+import numpy as np
 import torch
+from nltk.tokenize.moses import MosesTokenizer
 from torch import nn, optim
 import torch.nn.functional as F
 from torch.autograd import Variable
+from tqdm import tqdm
+import logging
 
-from baselineNeural.data_loader import *
+
+# from baselineNeural.data_loader import load_train, load_glove
+
+
+class Baseline(nn.Module):
+    def __init__(self, embedding_dim, input_dim, hidden_size):
+        super(Baseline, self).__init__()
+        self.embedding_dim = embedding_dim
+        self.input_dim = input_dim
+        self.hidden_size = hidden_size
+
+        self.gru = nn.GRU(input_size=self.input_dim,
+                          hidden_size=self.hidden_size,
+                          batch_first=True)
+        # self.grus = [nn.GRU(input_size=self.embedding_dim,
+        #                     hidden_size=self.hidden_size,
+        #                     batch_first=True)
+        #              for _ in range(input_dim)]
+        self.lineboi = nn.Linear(self.hidden_size, self.input_dim)
+
+    def forward(self, sentences):
+        print("HERE")
+        sentences = sentences.unsqueeze(1)
+        sentences = torch.transpose(sentences, 0, 2)
+        print(sentences)
+        print(len(sentences))
+        print("HERE2")
+        print(self.input_dim, self.hidden_size, self.embedding_dim)
+        # 50x1x32 and 1x50x32
+        encoded_sentences, _ = self.gru(sentences)
+        print("encoded:")
+        print(encoded_sentences)
+        seq = self.lineboi(encoded_sentences)
+
+        return seq
 
 
 class Net(nn.Module):
     def __init__(self, embedding_dim, input_dim, hidden_size):
         super(Net, self).__init__()
-        self.grus = [nn.GRU(input_size=self.embedding_dim,
-                            hidden_size=self.hidden_size,
-                            batch_first=True)
-                     for _ in range(input_dim)]
-        for _ in range(input_dim)
+        self.gru = nn.GRU(input_size=self.input_dim,
+                          hidden_size=self.hidden_size,
+                          batch_first=True)
+        # self.grus = [nn.GRU(input_size=self.embedding_dim,
+        #                     hidden_size=self.hidden_size,
+        #                     batch_first=True)
+        #              for _ in range(input_dim)]
+        self.compress = nn.Linear(16 * 5 * 5, 120)
 
-        self.conv1 = nn.Conv2d(3, 6, 5)
-        self.pool = nn.MaxPool2d(2, 2)
-        self.conv2 = nn.Conv2d(6, 16, 5)
-        self.fc1 = nn.Linear(16 * 5 * 5, 120)
-        self.fc2 = nn.Linear(120, 84)
-        self.fc3 = nn.Linear(84, 10)
-
-    def forward(self, x):
-        x = self.pool(F.relu(self.conv1(x)))
-        x = self.pool(F.relu(self.conv2(x)))
-        x = x.view(-1, 16 * 5 * 5)
-        x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
-        x = self.fc3(x)
-        return x
+    def forward(self, sentences):
+        return
 
 
 def embed(glove, train):
@@ -80,35 +110,132 @@ def embed(glove, train):
         for sentence in sentences:
             while len(sentence) < longest_word_count:
                 sentence.append([0 for _ in range(embed_dimensions)])
-        print("lens", len(sentences), len(labels), len(sentences[0]), len(sentences[1]))
-        tensor1 = torch.FloatTensor(sentences)
+        # print("lens", len(sentences), len(labels), len(sentences[0]), len(sentences[1]))
+
+        # this seems wrong but for a baseline I guess it'll do
+        compressed_ss = []
+        for sentence in sentences:
+            compressed_s = [0 for _ in range(embedding_dim)]
+            for word in sentence:
+                for i, val in enumerate(word):
+                    # print("sentences: ", sentences)
+                    # print("sentence: ", sentence)
+                    # print("val: ", val)
+                    compressed_s[i] += val
+            compressed_ss.append(compressed_s)
+
+        # tensor1 = torch.FloatTensor(sentences)
+        tensor1 = torch.FloatTensor(compressed_ss)
         tensor2 = torch.IntTensor(labels)
         tensor_data.append((tensor1, tensor2))
     print("Finished embeddings.")
-    return tensor_data
+    return longest_sentence_count, tensor_data
+
+
+GLOVE_URL = "../glove/glove.6B.50d.txt"
+
+TRAIN_URL = "../extracted/train"
+DEV_URL = "../extracted/dev"
+TEST_URL = "../extracted/test"
+
+logger = logging.getLogger(__name__)
+
+
+def load_glove(url=GLOVE_URL):
+    """
+    Create an embedding matrix for a Vocabulary.
+    """
+    glove_embeddings = {}
+    embedding_dim = None
+    logger.info("Reading GloVe embeddings from {}".format(url))
+
+    with open(url, encoding="utf-8") as glove_file:
+        for line in tqdm(glove_file, total=get_num_lines(url)):
+            fields = line.strip().split(" ")
+            word = fields[0]
+            vals = []
+            for x in fields[1:]:
+                vals.append(float(x))
+            # vector = np.asarray(fields[1:], dtype="float32")
+            vector = vals
+            if embedding_dim is None:
+                embedding_dim = len(vector)
+            else:
+                assert embedding_dim == len(vector)
+            glove_embeddings[word] = vector
+    return embedding_dim, glove_embeddings
+
+
+def load_train(url=TRAIN_URL, debug=False):
+    return _load_inputs(url, debug)
+
+
+def load_dev(url=DEV_URL, debug=False):
+    return _load_inputs(url, debug)
+
+
+def load_test(url=TEST_URL, debug=False):
+    return _load_inputs(url, debug)
+
+
+def _load_inputs(url, debug=False):
+    m = MosesTokenizer()
+    import os
+    result = []
+    i = 0
+    for filename in tqdm(os.listdir(url)):
+        i += 1
+        if debug and i > 100:
+            break
+        if filename.endswith(".story"):
+            curr_l = []
+            curr_t = []
+            path = os.path.join(url, filename)
+            with open(path, "r", encoding="utf-8") as file:
+                for line in file:
+                    label = int(line[:2].strip())
+                    if label == 2:
+                        continue
+                    text = line[2:].strip()
+                    tokens = m.tokenize(text)
+                    curr_l.append(label)
+                    curr_t.append(tokens)
+            result.append((curr_t, curr_l))
+    return result
+
+
+def get_num_lines(file_path):
+    fp = open(file_path, "r+")
+    buf = mmap.mmap(fp.fileno(), 0)
+    lines = 0
+    while buf.readline():
+        lines += 1
+    return lines
 
 
 if __name__ == "__main__":
     print("Loading GLoVe vectors.")
     embedding_dim, glove = load_glove()
     print("Loading training data.")
+    # TODO: make this a DataLoader
     train = load_train(debug=True)
-    train = embed(glove, train)
+    input_dim, train = embed(glove, train)
 
+    # net = Net(embedding_dim=embedding_dim, input_dim=len(train), hidden_size=32)
+    net = Baseline(embedding_dim=embedding_dim, input_dim=input_dim, hidden_size=32)
     criterion = nn.CrossEntropyLoss()
-    net = Net(embedding_dim=embedding_dim, input_dim=len(train), hidden_size=32)
     optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
     for epoch in range(2):  # loop over the dataset multiple times
         running_loss = 0.0
-        for i, data in enumerate(train):
+        for i, document in enumerate(train):
             # get the inputs
-            inputs, labels = data
-            print(inputs)
+            sentences, labels = document
+            print(sentences)
             print(labels)
 
             # wrap them in Variable
-            inputs = Variable(inputs)
+            sentences = Variable(sentences)
             labels = Variable(labels)
 
             print("zero param gradients")
@@ -117,7 +244,8 @@ if __name__ == "__main__":
 
             print("forward backward opt")
             # forward + backward + optimize
-            outputs = net(inputs)
+            outputs = net(sentences)
+            print("OUTPUTS: ", outputs)
 
             print("loss back")
             loss = criterion(outputs, labels)
