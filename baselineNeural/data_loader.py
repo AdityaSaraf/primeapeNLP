@@ -20,10 +20,10 @@ def load_glove(url=GLOVE_URL):
     """
     glove_embeddings = {}
     embedding_dim = None
-    logger.info("Reading GloVe embeddings from {}".format(url))
+    # logger.info("Reading GloVe embeddings from {}".format(url))
 
     with open(url, encoding="utf-8") as glove_file:
-        for line in tqdm(glove_file, total=get_num_lines(url)):
+        for line in tqdm(glove_file, total=get_num_lines(url), desc="Reading GLoVe vectors"):
             fields = line.strip().split(" ")
             word = fields[0]
             vals = []
@@ -39,26 +39,26 @@ def load_glove(url=GLOVE_URL):
     return embedding_dim, glove_embeddings
 
 
-def load_train(url=TRAIN_URL, debug=False):
-    return _load_inputs(url, debug)
+def load_train(url=TRAIN_URL, debug=False, dlimit=100):
+    return _load_inputs(url, debug, dlimit)
 
 
-def load_dev(url=DEV_URL, debug=False):
-    return _load_inputs(url, debug)
+def load_dev(url=DEV_URL, debug=False, dlimit=100):
+    return _load_inputs(url, debug, dlimit)
 
 
-def load_test(url=TEST_URL, debug=False):
-    return _load_inputs(url, debug)
+def load_test(url=TEST_URL, debug=False, dlimit=100):
+    return _load_inputs(url, debug, dlimit)
 
 
-def _load_inputs(url, debug=False):
+def _load_inputs(url, debug=False, dlimit=100):
     m = MosesTokenizer()
     import os
     result = []
     i = 0
-    for filename in tqdm(os.listdir(url)):
+    for filename in tqdm(os.listdir(url), desc="Reading files from directory"):
         i += 1
-        if debug and i > 100:
+        if debug and i > dlimit:
             break
         if filename.endswith(".story"):
             curr_l = []

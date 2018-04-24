@@ -1,13 +1,7 @@
-import mmap
-
-import numpy as np
 import torch
-from nltk.tokenize.moses import MosesTokenizer
 from torch import nn, optim
-import torch.nn.functional as F
 from torch.autograd import Variable
 from tqdm import tqdm
-import logging
 
 # from baselineNeural.data_loader import load_train, load_glove
 from baselineNeural.data_loader import load_glove, load_train
@@ -57,7 +51,7 @@ def embed(glove, train):
     new_data = []
     longest_sentence_count = 0
     longest_word_count = 0
-    for data in train:
+    for data in tqdm(train, desc="Embedding sentences"):
         # one document
         sentences, labels = data
         # track highest num of sentences in a doc
@@ -82,7 +76,7 @@ def embed(glove, train):
         new_data.append((embedded_sentences, labels))
     # tensor_data converts everything to tensors
     tensor_data = []
-    for sentences, labels in tqdm(new_data):
+    for sentences, labels in tqdm(new_data, desc="Converting to Tensors"):
         # print(sentences)
         # print(sentences is None)
         # print(len(sentences))
@@ -118,16 +112,15 @@ def embed(glove, train):
         # tensor2 = torch.IntTensor(labels)
         tensor2 = torch.FloatTensor(labels)
         tensor_data.append((tensor1, tensor2))
-    print("Finished embeddings.")
     return longest_sentence_count, tensor_data
 
 
 if __name__ == "__main__":
-    print("Loading GLoVe vectors.")
+    # print("Loading GLoVe vectors.")
     embedding_dim, glove = load_glove()
-    print("Loading training data.")
+    # print("Loading training data.")
     # TODO: make this a DataLoader
-    train = load_train(debug=True)
+    train = load_train(debug=True, dlimit=10000)
     input_dim, train = embed(glove, train)
 
     # net = Net(embedding_dim=embedding_dim, input_dim=len(train), hidden_size=32)
