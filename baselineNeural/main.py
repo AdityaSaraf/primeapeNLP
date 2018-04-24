@@ -9,8 +9,8 @@ from torch.autograd import Variable
 from tqdm import tqdm
 import logging
 
-
 # from baselineNeural.data_loader import load_train, load_glove
+from baselineNeural.data_loader import load_glove, load_train
 
 
 class Baseline(nn.Module):
@@ -20,46 +20,35 @@ class Baseline(nn.Module):
         self.input_dim = input_dim
         self.hidden_size = hidden_size
 
-        self.gru = nn.GRU(input_size=self.input_dim,
+        # seq_len = number of inputs in input var
+        # input_size = number of FEATURES per input
+        self.gru = nn.GRU(input_size=self.embedding_dim,
                           hidden_size=self.hidden_size,
                           batch_first=True)
         # self.grus = [nn.GRU(input_size=self.embedding_dim,
         #                     hidden_size=self.hidden_size,
         #                     batch_first=True)
         #              for _ in range(input_dim)]
-        self.lineboi = nn.Linear(self.hidden_size, self.input_dim)
+        # self.lineboi = nn.Linear(self.hidden_size, self.input_dim)
+        self.lineboi = nn.Linear(self.hidden_size, 1)
+        self.softmax = nn.Softmax()
 
     def forward(self, sentences):
-        print("HERE")
+        # print("HERE")
         sentences = sentences.unsqueeze(1)
-        sentences = torch.transpose(sentences, 0, 2)
-        print(sentences)
-        print(len(sentences))
-        print("HERE2")
-        print(self.input_dim, self.hidden_size, self.embedding_dim)
+        # sentences = torch.transpose(sentences, 0, 2)
+        # print(sentences)
+        # print(len(sentences))
+        # print("HERE2")
+        # print(self.input_dim, self.hidden_size, self.embedding_dim)
         # 50x1x32 and 1x50x32
         encoded_sentences, _ = self.gru(sentences)
-        print("encoded:")
-        print(encoded_sentences)
+        # print("encoded:")
+        # print(encoded_sentences)
         seq = self.lineboi(encoded_sentences)
+        softmaxed = self.softmax(seq)
 
-        return seq
-
-
-class Net(nn.Module):
-    def __init__(self, embedding_dim, input_dim, hidden_size):
-        super(Net, self).__init__()
-        self.gru = nn.GRU(input_size=self.input_dim,
-                          hidden_size=self.hidden_size,
-                          batch_first=True)
-        # self.grus = [nn.GRU(input_size=self.embedding_dim,
-        #                     hidden_size=self.hidden_size,
-        #                     batch_first=True)
-        #              for _ in range(input_dim)]
-        self.compress = nn.Linear(16 * 5 * 5, 120)
-
-    def forward(self, sentences):
-        return
+        return softmaxed
 
 
 def embed(glove, train):
@@ -126,91 +115,11 @@ def embed(glove, train):
 
         # tensor1 = torch.FloatTensor(sentences)
         tensor1 = torch.FloatTensor(compressed_ss)
-        tensor2 = torch.IntTensor(labels)
+        # tensor2 = torch.IntTensor(labels)
+        tensor2 = torch.FloatTensor(labels)
         tensor_data.append((tensor1, tensor2))
     print("Finished embeddings.")
     return longest_sentence_count, tensor_data
-
-
-GLOVE_URL = "../glove/glove.6B.50d.txt"
-
-TRAIN_URL = "../extracted/train"
-DEV_URL = "../extracted/dev"
-TEST_URL = "../extracted/test"
-
-logger = logging.getLogger(__name__)
-
-
-def load_glove(url=GLOVE_URL):
-    """
-    Create an embedding matrix for a Vocabulary.
-    """
-    glove_embeddings = {}
-    embedding_dim = None
-    logger.info("Reading GloVe embeddings from {}".format(url))
-
-    with open(url, encoding="utf-8") as glove_file:
-        for line in tqdm(glove_file, total=get_num_lines(url)):
-            fields = line.strip().split(" ")
-            word = fields[0]
-            vals = []
-            for x in fields[1:]:
-                vals.append(float(x))
-            # vector = np.asarray(fields[1:], dtype="float32")
-            vector = vals
-            if embedding_dim is None:
-                embedding_dim = len(vector)
-            else:
-                assert embedding_dim == len(vector)
-            glove_embeddings[word] = vector
-    return embedding_dim, glove_embeddings
-
-
-def load_train(url=TRAIN_URL, debug=False):
-    return _load_inputs(url, debug)
-
-
-def load_dev(url=DEV_URL, debug=False):
-    return _load_inputs(url, debug)
-
-
-def load_test(url=TEST_URL, debug=False):
-    return _load_inputs(url, debug)
-
-
-def _load_inputs(url, debug=False):
-    m = MosesTokenizer()
-    import os
-    result = []
-    i = 0
-    for filename in tqdm(os.listdir(url)):
-        i += 1
-        if debug and i > 100:
-            break
-        if filename.endswith(".story"):
-            curr_l = []
-            curr_t = []
-            path = os.path.join(url, filename)
-            with open(path, "r", encoding="utf-8") as file:
-                for line in file:
-                    label = int(line[:2].strip())
-                    if label == 2:
-                        continue
-                    text = line[2:].strip()
-                    tokens = m.tokenize(text)
-                    curr_l.append(label)
-                    curr_t.append(tokens)
-            result.append((curr_t, curr_l))
-    return result
-
-
-def get_num_lines(file_path):
-    fp = open(file_path, "r+")
-    buf = mmap.mmap(fp.fileno(), 0)
-    lines = 0
-    while buf.readline():
-        lines += 1
-    return lines
 
 
 if __name__ == "__main__":
@@ -223,43 +132,53 @@ if __name__ == "__main__":
 
     # net = Net(embedding_dim=embedding_dim, input_dim=len(train), hidden_size=32)
     net = Baseline(embedding_dim=embedding_dim, input_dim=input_dim, hidden_size=32)
-    criterion = nn.CrossEntropyLoss()
+    # criterion = nn.CrossEntropyLoss()
+    criterion = nn.BCELoss()
     optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
     for epoch in range(2):  # loop over the dataset multiple times
+        print("epoch")
         running_loss = 0.0
+        # TODO: this treats each document as a batch and probably isn't the best way to do it
+        # TODO: use DataLoader!!
         for i, document in enumerate(train):
             # get the inputs
             sentences, labels = document
-            print(sentences)
-            print(labels)
 
             # wrap them in Variable
             sentences = Variable(sentences)
             labels = Variable(labels)
 
-            print("zero param gradients")
+            # print("zero param gradients")
             # zero the parameter gradients
             optimizer.zero_grad()
 
-            print("forward backward opt")
+            # print("forward backward opt")
             # forward + backward + optimize
             outputs = net(sentences)
-            print("OUTPUTS: ", outputs)
+            # print("OUTPUTS: ", outputs)
+            # print("labels", labels.shape)
+            outputs = outputs.squeeze()
+            # print("outputs", outputs.shape)
 
-            print("loss back")
+            # print("loss back")
+            # loss = criterion(outputs, labels)
             loss = criterion(outputs, labels)
             loss.backward()
+            # print("LOSS:", loss)
 
-            print("step")
+            # print("step")
             optimizer.step()
 
             # print statistics
             running_loss += loss.data[0]
+            # print("loss data[0] = ", loss.data, loss.data[0])
+            # print("running loss", running_loss)
             # if i % 2000 == 1999:  # print every 2000 mini-batches
-            if i % 2 == 0:  # print every 2000 mini-batches
+            print_ct = 5
+            if i % print_ct == 0:  # print every 5 mini-batches
                 print('[%d, %5d] loss: %.3f' %
-                      (epoch + 1, i + 1, running_loss / 2000))
+                      (epoch + 1, i + 1, running_loss / print_ct))
                 running_loss = 0.0
 
         print('Finished Training')
