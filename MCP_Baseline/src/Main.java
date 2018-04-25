@@ -1,3 +1,8 @@
+import JRouge.common.RougeSummaryModel;
+import JRouge.common.ScoreType;
+import JRouge.interfaces.IRougeSummaryModel;
+import JRouge.rouge.RougeN;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -5,23 +10,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
 class LabelledDocument {
-    public List<String[]> sentences;
-    public List<Integer> answers;
-    public List<Set<String>> sentenceSets;
+    public List<String> originalSentences;
+    public List<Integer> answerNums;
+    public List<String> filteredSentences;
     public Set<String> vocabulary;
     public int lengthSummary;
 
-    public LabelledDocument(List<String[]> sentences, List<Integer> answers, List<Set<String>> sentenceSets,
-                            Set<String> vocabulary, int lengthSummary) {
-        this.sentences = sentences;
-        this.answers = answers;
-        this.sentenceSets = sentenceSets;
+    public LabelledDocument(List<String> originalSentences, List<Integer> answerNums,
+                            List<String> filteredSentences, Set<String> vocabulary, int lengthSummary) {
+        this.originalSentences = originalSentences;
+        this.answerNums = answerNums;
+        this.filteredSentences = filteredSentences;
         this.vocabulary = vocabulary;
         this.lengthSummary = lengthSummary;
     }
@@ -32,7 +37,7 @@ public class Main {
     static List<String> stopWords = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-        File directory = new File("sample_extracted");
+        File directory = new File("extracted2");
         File[] files = directory.listFiles();
 
         File stopWordFile = new File("stopwords.txt");
@@ -46,24 +51,53 @@ public class Main {
         }
 
         double total = 0;
+        int wc = 0;
         for (LabelledDocument document : documents) {
-            Set<Integer> generatedSummary = MCPSolver.solve(document.sentenceSets, document.sentences, document.lengthSummary);
-            int numCorrect = 0;
-            for (int i : document.answers) {
-                if (generatedSummary.contains(i)) {
-                    numCorrect++;
-                }
+//            Set<Integer> generatedSummary = MCPSolver.simpleGreedy(document.filteredSentences, document.lengthSummary);
+            Set<Integer> generatedSummary = MCPSolver.unweightedILP(document.originalSentences, document.lengthSummary);
+            List<String> systemSummary = new ArrayList<>();
+            List<String> gsSummary = new ArrayList<>();
+            for (Integer i : generatedSummary) {
+                systemSummary.add(document.originalSentences.get(i));
+                wc += document.originalSentences.get(i).split(" ").length;
             }
-            double ratioCorrect = (double) numCorrect / document.answers.size();
-            total += ratioCorrect;
-            System.out.println(ratioCorrect);
+            for (int i : document.answerNums) {
+                gsSummary.add(document.originalSentences.get(i));
+            }
+            double rougeScore = test(systemSummary, gsSummary);
+            total += rougeScore;
+            System.out.println(rougeScore);
             // prints the generated summary
-            for (int i : generatedSummary) {
-                System.out.println(Arrays.toString(document.sentences.get(i)));
-            }
+//            for (int i : generatedSummary) {
+//                System.out.println(Arrays.toString(document.sentences.get(i)));
+//            }
         }
-        System.out.println(total/documents.size());
+        System.out.println("wc = " + wc);
+        System.out.println("Average: " + total/documents.size());
 
+    }
+
+    private static double test(List<String> systemSummary, List<String> goldStandardSummary) {
+        //            int numCorrect = 0;
+        //            for (int i : document.answerNums) {
+        //                if (generatedSummary.contains(i)) {
+        //                    numCorrect++;
+        //                }
+        //            }
+        //            double ratioCorrect = (double) numCorrect / document.answerNums.size();
+        RougeSummaryModel sysSum = new RougeSummaryModel(null);
+        for (String sentence : systemSummary) {
+            sysSum.addSentence(sentence);
+        }
+        RougeSummaryModel gs = new RougeSummaryModel(null);
+        for (String sentence : goldStandardSummary) {
+            gs.addSentence(sentence);
+        }
+        Set<IRougeSummaryModel> s = new HashSet<>();
+        s.add(gs);
+        RougeN rouge = new RougeN(sysSum, s, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, 'A', 0.5);
+        Map<ScoreType, Double> results = rouge.computeNGramScore();
+        return results.get(ScoreType.R);
     }
 
     private static void populateStopWordList(File file) throws FileNotFoundException {
@@ -77,10 +111,10 @@ public class Main {
     private static LabelledDocument parseFile(File file) throws FileNotFoundException {
         FileReader reader = new FileReader(file);
         Scanner scanner =  new Scanner(reader);
-        List<String[]> sentences = new ArrayList<>();
-        List<Set<String>> sentenceSets = new ArrayList<>();
+        List<String> filteredSentences = new ArrayList<>();
         Set<String> vocabulary = new HashSet<>();
-        List<Integer> answers = new ArrayList<>();
+        List<Integer> answerNums = new ArrayList<>();
+        List<String> originalSentences = new ArrayList<>();
         int lineNum = 0;
         int lengthSummary = 0;
         while (scanner.hasNextLine()) {
@@ -89,19 +123,23 @@ public class Main {
                 lengthSummary++;
                 continue;
             }
-            // TODO: filter sentence based on stopword list
             String[] sentence = line.substring(2).split(" ");
-            Set<String> sentenceSet = new HashSet<>(Arrays.asList(sentence));
-            filter(sentenceSet);
-            sentences.add(sentence);
-            sentenceSets.add(sentenceSet);
-            vocabulary.addAll(sentenceSet);
+            StringBuilder sb = new StringBuilder();
+            for (String word : sentence) {
+                if (!stopWords.contains(word)) {
+                    sb.append(word).append(" ");
+                    vocabulary.add(word);
+                }
+            }
+            filteredSentences.add(sb.toString());
+            originalSentences.add(line.substring(2));
             if (line.startsWith("1 ")) {
-                answers.add(lineNum);
+                answerNums.add(lineNum);
             }
             lineNum++;
         }
-        return new LabelledDocument(sentences, answers, sentenceSets, vocabulary, lengthSummary);
+        return new LabelledDocument(originalSentences, answerNums, filteredSentences,
+                                    vocabulary, lengthSummary);
     }
 
     private static void filter(Set<String> sentenceSet) {
