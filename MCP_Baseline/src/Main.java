@@ -16,17 +16,21 @@ import java.util.Scanner;
 import java.util.Set;
 
 class LabelledDocument {
+    public String fileName;
     public List<String> originalSentences;
     public List<Integer> answerNums;
     public List<String> filteredSentences;
+    public List<String> abstractiveSentences;
     public Set<String> vocabulary;
     public int lengthSummary;
 
-    public LabelledDocument(List<String> originalSentences, List<Integer> answerNums,
-                            List<String> filteredSentences, Set<String> vocabulary, int lengthSummary) {
+    public LabelledDocument(String fileName, List<String> originalSentences, List<Integer> answerNums, List<String> filteredSentences,
+                            List<String> abstractiveSentences, Set<String> vocabulary, int lengthSummary) {
+        this.fileName = fileName;
         this.originalSentences = originalSentences;
         this.answerNums = answerNums;
         this.filteredSentences = filteredSentences;
+        this.abstractiveSentences = abstractiveSentences;
         this.vocabulary = vocabulary;
         this.lengthSummary = lengthSummary;
     }
@@ -37,11 +41,16 @@ public class Main {
     static List<String> stopWords = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-        File directory = new File("extracted2");
+        File directory = new File("sample_extracted");
         File[] files = directory.listFiles();
 
         File stopWordFile = new File("stopwords.txt");
         populateStopWordList(stopWordFile);
+
+        File outputDir = new File("sample_extracted_mcp_summs");
+        if (!outputDir.exists()) {
+            outputDir.mkdir();
+        }
 
         List<LabelledDocument> documents = new ArrayList<>();
         for (File file : files) {
@@ -53,8 +62,8 @@ public class Main {
         double total = 0;
         int wc = 0;
         for (LabelledDocument document : documents) {
-//            Set<Integer> generatedSummary = MCPSolver.simpleGreedy(document.filteredSentences, document.lengthSummary);
-            Set<Integer> generatedSummary = MCPSolver.unweightedILP(document.originalSentences, document.lengthSummary);
+            Set<Integer> generatedSummary = MCPSolver.simpleGreedy(document.filteredSentences, document.lengthSummary);
+//            Set<Integer> generatedSummary = MCPSolver.unweightedILP(document.originalSentences, document.lengthSummary);
             List<String> systemSummary = new ArrayList<>();
             List<String> gsSummary = new ArrayList<>();
             for (Integer i : generatedSummary) {
@@ -64,13 +73,15 @@ public class Main {
             for (int i : document.answerNums) {
                 gsSummary.add(document.originalSentences.get(i));
             }
-            double rougeScore = test(systemSummary, gsSummary);
+            double rougeScore = test(systemSummary, document.abstractiveSentences);
             total += rougeScore;
             System.out.println(rougeScore);
-            // prints the generated summary
-//            for (int i : generatedSummary) {
-//                System.out.println(Arrays.toString(document.sentences.get(i)));
-//            }
+//             prints the generated summary
+            File out
+            for (int i : generatedSummary) {
+                System.out.println(document.originalSentences.get(i));
+
+            }
         }
         System.out.println("wc = " + wc);
         System.out.println("Average: " + total/documents.size());
@@ -97,7 +108,7 @@ public class Main {
         s.add(gs);
         RougeN rouge = new RougeN(sysSum, s, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, 'A', 0.5);
         Map<ScoreType, Double> results = rouge.computeNGramScore();
-        return results.get(ScoreType.R);
+        return results.get(ScoreType.F);
     }
 
     private static void populateStopWordList(File file) throws FileNotFoundException {
@@ -115,12 +126,14 @@ public class Main {
         Set<String> vocabulary = new HashSet<>();
         List<Integer> answerNums = new ArrayList<>();
         List<String> originalSentences = new ArrayList<>();
+        List<String> summarySentences = new ArrayList<>();
         int lineNum = 0;
         int lengthSummary = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             if (line.startsWith("2 ")) {
                 lengthSummary++;
+                summarySentences.add(line.substring(2));
                 continue;
             }
             String[] sentence = line.substring(2).split(" ");
@@ -138,8 +151,8 @@ public class Main {
             }
             lineNum++;
         }
-        return new LabelledDocument(originalSentences, answerNums, filteredSentences,
-                                    vocabulary, lengthSummary);
+        return new LabelledDocument(file.getName(), originalSentences, answerNums, filteredSentences,
+                                    summarySentences, vocabulary, lengthSummary);
     }
 
     private static void filter(Set<String> sentenceSet) {

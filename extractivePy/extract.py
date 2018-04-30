@@ -64,13 +64,18 @@ def extract(file_list=None) -> None:
             print("Path: " + path)
             with open(path, "r", encoding="utf-8") as file:
                 lines = file.readlines()
-                parse(filename, lines)
+                full_str = file.read()
+                parse(filename, lines, full_str)
 
 
-def parse(file_name: str, lines: List[str]) -> None:
-    import re
+def parse(file_name: str, lines: List[str], full_str: str) -> None:
     hit_highlight: bool = False
-    sentences = []
+    highlight_idx = full_str.find("@highlight")
+    document_text = full_str[0:highlight_idx]
+    document_text.replace('n', ' ')
+    highlight_text = full_str[highlight_idx:]
+    lines = highlight_text.split()
+    sentences = nltk.sent_tokenize(document_text)
     highlights = []
     for x in lines:
         x = x.strip()
@@ -86,6 +91,7 @@ def parse(file_name: str, lines: List[str]) -> None:
             hit_highlight = True
             continue
         # xs = re.split(r'[.?!]\s+', x)
+        print("shouldn't get here")
         xs = re.split(r'(?<=[.?!])\s+', x)
         for x in xs:
             if len(x) > 0:
