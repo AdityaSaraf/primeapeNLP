@@ -67,7 +67,7 @@ This is a tradeoff that we are not able to measure, so the default option is to 
 ## Combinatorial Setup
 
 ### Step 1
-Add all the JAR files in MCP_Baseline/lib to the classpath.
+Add all the JAR files in MCP_Baseline/lib to the classpath. Download [StanfordCoreNLP](https://stanfordnlp.github.io/CoreNLP/) separately, and add that to the classpath as well.
 
 ### Step 2
 Install lp_solve. Follow the instructions on section 2 of this page: http://lpsolve.sourceforge.net/5.5/Java/README.html. The relevant downloads can be found here: https://sourceforge.net/projects/lpsolve/files/lpsolve/5.5.2.5/.
