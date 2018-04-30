@@ -1,0 +1,4 @@
+At the National Children and Adults Services conference yesterday, Mr Hunt revealed that around five million people say television is their main form of company.
+In a response to a House of Lords inquiry the Government said: 'Systems are now available which use lightweight touchscreen tablets enabled with wi-fi and broadband to allow users to send and receive email and text messages, share photos and video conference with family, friends, care providers and health professionals via a universal messaging system.'
+A recent report also sparked alarm about the care local authorities were providing to people in their own homes, revealing that three-quarters allowed carers to spend just 15 minutes with each of their patients.
+She told The Telegraph: 'This surely was dreamed up by a 25 year-old, totally unaware of the realities of being an 85 year-old woman living on her own in frail health in 2030.

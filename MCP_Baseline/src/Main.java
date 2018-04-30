@@ -7,8 +7,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -77,11 +77,18 @@ public class Main {
             total += rougeScore;
             System.out.println(rougeScore);
 //             prints the generated summary
-            File out
-            for (int i : generatedSummary) {
-                System.out.println(document.originalSentences.get(i));
-
+            File outputFile = new File(outputDir, document.fileName);
+            if (outputFile.exists()) {
+                outputFile.delete();
             }
+            outputFile.createNewFile();
+            PrintWriter writer = new PrintWriter(outputFile);
+            for (int i : generatedSummary) {
+                String sent = document.originalSentences.get(i);
+                System.out.println(sent);
+                writer.println(sent);
+            }
+            writer.flush();
         }
         System.out.println("wc = " + wc);
         System.out.println("Average: " + total/documents.size());

@@ -1,0 +1,3 @@
+French told ABC that for the county prosecutor to release the grand jury decision at night and for the governor to call in the National Guard but not deploy them to West Florissant, 'it really showed a failure to grasp the situation and to handle it on the part of government'.
+On Sunday, Darren Wilson's lawyer revealed that the police officer had chosen to resign without severance pay after being made aware of threats that his fellow officers would be harmed if he stayed in the force.
+Within 30 minutes of the decision being announced that Monday night, Ferguson had erupted in an orgy of violence, arson, random gunfire and pitched battles, with heavily armed riot police unable to cope with the scale of the mayhem.
