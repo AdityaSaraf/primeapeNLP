@@ -1,0 +1,12 @@
+*.pyc
+__pycache__
+
+data/*
+!data/.placeholder
+
+outputs/hyp/*
+!outputs/hyp/.placeholder
+
+outputs/ref/*
+!outputs/ref/.placeholder
+
