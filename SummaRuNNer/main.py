@@ -185,9 +185,9 @@ def test():
 
     doc_num = len(test_dataset)
     time_cost = 0
-    file_id = 1
     for batch in tqdm(test_iter):
-        features, _, summaries, doc_lens = vocab.make_features(batch)
+        file_id = 0
+        features, _, summaries, doc_lens, names = vocab.make_features(batch)
         t1 = time()
         if use_gpu:
             probs = net(Variable(features).cuda(), doc_lens)
@@ -205,9 +205,10 @@ def test():
             doc = batch['doc'][doc_id].split('\n')[:doc_len]
             hyp = [doc[index] for index in topk_indices]
             ref = summaries[doc_id]
-            with open(os.path.join(args.ref, str(file_id) + '.txt'), 'w') as f:
+            file_name = names[file_id]
+            with open(os.path.join(args.ref, str(file_name)), 'w') as f:
                 f.write(ref)
-            with open(os.path.join(args.hyp, str(file_id) + '.txt'), 'w') as f:
+            with open(os.path.join(args.hyp, str(file_name)), 'w') as f:
                 f.write('\n'.join(hyp))
             start = stop
             file_id = file_id + 1

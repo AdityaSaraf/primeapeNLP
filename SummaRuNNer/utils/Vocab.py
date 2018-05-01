@@ -56,4 +56,4 @@ class Vocab():
         targets = torch.LongTensor(targets)
         summaries = batch['summaries']
 
-        return features, targets, summaries, doc_lens
+        return features, targets, summaries, doc_lens, batch['name']
