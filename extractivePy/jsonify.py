@@ -27,6 +27,7 @@ def nice_one(dir_name, output_name):
                         label_ls.append(label)
                         token_ls.append(" ".join(tokens))
                 obj = {
+                    "name": filename,
                     "doc": "\n".join(token_ls),
                     "labels": "\n".join(label_ls),
                     "summaries": "\n".join(summs)
