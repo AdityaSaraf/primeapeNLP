@@ -2,6 +2,7 @@
 
 * [Training Setup](#training-setup)
   * [Additional Setup Notes](#additional-setup-notes)
+* [Combinatorial Setup](#combinatorial-setup)
 * [Dataset Format](#dataset-format)
 
 ## Training Setup
@@ -62,6 +63,14 @@ The NSW Government has decided to keep casino details public citing their disclo
 This is a tradeoff that we are not able to measure, so the default option is to respect line breaks in the original DailyMail & CNN dataset.
 
 -----
+
+## Combinatorial Setup
+
+### Step 1
+Add all the JAR files in MCP_Baseline/lib to the classpath. Download [StanfordCoreNLP](https://stanfordnlp.github.io/CoreNLP/) separately, and add that to the classpath as well.
+
+### Step 2
+Install lp_solve. Follow the instructions on section 2 of this page: http://lpsolve.sourceforge.net/5.5/Java/README.html. The relevant downloads can be found here: https://sourceforge.net/projects/lpsolve/files/lpsolve/5.5.2.5/.
 
 ## Dataset Format
 

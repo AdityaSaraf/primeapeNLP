@@ -1,0 +1,3 @@
+The double Olympic champion sprinted clear of Kenyan rival Micah Kogo to cross the line in 59 minutes 32 seconds, taking 20 seconds off the mark set by Spain's Fabian Roncero 14 years ago.
+Farah's previous half marathon best was 60:00 at the Bupa Great North Run last September, but that was set on an overall downhill course rather than a looped route.
+His only race of the indoor campaign, in Birmingham last month, resulted in a new world best time over two miles and this latest success on the road suggests he is in the best possible shape ahead of a season in which he will aim to retain his 5,000 and 10,000 metres titles at the World Championships in Beijing in August.

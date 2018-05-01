@@ -1,0 +1,1 @@
+The coalition dropped two bombs on February 8 in Najrab district in Kapisa province, after movements by eight people on the ground were assessed as a threat to Afghan police and Nato forces in the area.
