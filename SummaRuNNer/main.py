@@ -170,7 +170,6 @@ def test():
                            shuffle=False)
     if use_gpu:
         checkpoint = torch.load(args.load_dir)
-        # checkpoint = torch.load(args.load_dir, map_location=lambda storage, loc: storage)
     else:
         checkpoint = torch.load(args.load_dir, map_location=lambda storage, loc: storage)
 
@@ -178,13 +177,10 @@ def test():
     # if at test time, we are using a CPU, we must override device to None
     if not use_gpu:
         checkpoint['args'].device = None
-    # checkpoint['args'].device = None
     net = getattr(models, checkpoint['args'].model)(checkpoint['args'])
     net.load_state_dict(checkpoint['model'])
-    print("using gpu? ", use_gpu)
-    net.cuda()
-    # if use_gpu:
-    #     net.cuda()
+    if use_gpu:
+        net.cuda()
     net.eval()
 
     doc_num = len(test_dataset)
