@@ -18,11 +18,15 @@ def init(ref_dir, score_dir, tokenize=False):
             with open(ans, "r", encoding="utf-8") as file:
                 length, actuals, refs = labels(file)
             with open(path, "r", encoding="utf-8") as file:
-                tmp = file.readlines()
+                try:
+                    tmp = file.readlines()
+                except:
+                    print("FAILED TO READ ", path)
+                    continue
                 if tokenize:
                     for sentence in tmp:
                         tokens = moses.tokenize(sentence)
-                        preds.append(" ".join(tokens))
+                        preds.append(" ".join(tokens).strip())
                 else:
                     preds = tmp
 
@@ -30,13 +34,16 @@ def init(ref_dir, score_dir, tokenize=False):
             guessed_positives += len(preds)
 
             for x in preds:
-                if x in actuals:
-                    true_positives += 1.0
+                for y in actuals:
+                    if x == y or x.strip() == y.strip():
+                        # print("MATCH: ", str(x == y), str(x.strip() == y.strip()), x, y)
+                        true_positives += 1.0
 
             print(filename)
             print(actuals)
             print(preds)
             print(refs)
+            # print(true_positives)
             print("\n")
 
     recall = true_positives / actual_positives
@@ -75,4 +82,4 @@ if __name__ == "__main__":
     # init(ref_dir="../sample_10k", score_dir="./rnn_rnn10")
     # init(ref_dir="../sample_10k", score_dir="./cnn_rnn10")
     # init(ref_dir="../sample_10k", score_dir="./attn_rnn10")
-    init(ref_dir="../sample_extracted", score_dir="./mcp", tokenize=True)
+    init(ref_dir="../extracted/combine", score_dir="./mcp", tokenize=True)

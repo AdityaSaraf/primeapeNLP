@@ -1,3 +1,3 @@
-But she seems to have more than her career on her mind, with reports that she has begun a relationship with actor Freddie Fox, 26, son of Day Of The Jackal star Edward Fox and actress Joanna David.
+Earlier she dazzled in white at a BAFTA Tea Party, joining Cara Delevingne, Keira Knightley and the ladies of hit TV show Downton Abbey as they partied in the sunshine town.
 And they were together in Los Angeles at celebrity hot-spot Chateau Marmont on Saturday, posing arm in arm at a pre-Golden Globes dinner, where Miss Bonas was also pictured with Downton Abbey stars Joanne Froggatt and Laura Carmichael.
 Miss Bonas, who dated Prince Harry for two years until last spring, stars alongside model Cara Delevingne as well as Oscar-winners Dame Judi Dench and Christoph Waltz in Tulip Fever, but Weinstein has singled her out as one to watch.

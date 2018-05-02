@@ -7,6 +7,7 @@ data/
 extracted/
 error_analysis/*10
 error_analysis/ref
+error_analysis/mcp
 *.iml
 glove/
 *.pyc
