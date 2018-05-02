@@ -42,4 +42,5 @@ def nice_one(dir_name, output_name):
 
 
 if __name__ == "__main__":
-    nice_one("../sample_extracted", output_name="sample_extracted.json")
+    # nice_one("../sample_extracted", output_name="sample_extracted.json")
+    nice_one("../sample_10k", output_name="sample_10k.json")
