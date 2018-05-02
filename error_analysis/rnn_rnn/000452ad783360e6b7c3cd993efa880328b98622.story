@@ -1,0 +1,3 @@
+Britain ’ s debts are increasing by almost £ 4,000 every second , campaigners will warn today as the spotlight falls on a catalogue of public sector waste .
+The Taxpayers Alliance warns public money has been ‘ spent with impunity ’ by councils , hospitals and Whitehall departments splashing out on celebrities , Christmas trees and costumes .
+Medway Council spent £ 4,000 hiring actor Brian Blessed to record an audio guide to play on its buses while Sandwell Council spent £ 4,000 hiring TV presenter Keith Chegwin for a St George ’ s Day event

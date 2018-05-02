@@ -1,0 +1,3 @@
+Miami Heat superstar LeBron James gave a touching tribute to one of his biggest fans last night - wearing her name on his sneakers just hours after she lost a grueling six-year battle with cancer .
+Brave battle : Bella Rodriguez-Torres , pictured left and right , died on Tuesday after a six year battle with cancer
+Family : Bella Rodriguez-Torres , pictured bottom left in happy times with her father Raymond , mother Shannah and little sister , bottom right , Rayna , was diagnosed with cancer aged four

@@ -1,0 +1,3 @@
+The parents of the nine-year-old girl who accidentally killed her shooting instructor with an Uzi last week didn &apos;t see he had been hit because their daughter was complaining the recoil was too much and hurt her shoulder , says the police report released today .
+Charles Vacca , 39 , was fatally struck in the head at Nevada &apos;s Bullets and Burgers when the weapon recoiled upwards out of the girl &apos;s grip in the split-second after he had told her to place it into automatic mode and fire .
+Vacca was standing next to the girl when she fired , but she and her parents only realized he was mortally wounded when one his colleagues at the shooting range rushed to help him as he lay on the floor .

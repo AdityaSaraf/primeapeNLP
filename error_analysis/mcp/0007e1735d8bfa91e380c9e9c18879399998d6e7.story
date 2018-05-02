@@ -1,0 +1,3 @@
+They created a short film showing a montage of family clips, which comes to an abrupt end before script on screen reads 'but wait...
+A very special present: Caryn and Bryan Canatella, who run a wedding videography business in Austin, Texas, decided to use their love of film and unleash their baby news via DVD - Caryn's mother is pictured here
+TV time: The couple gifted the novel film to Caryn's parents on Christmas day - The whole family then sat down to watch the footage with their reactions caught on camera

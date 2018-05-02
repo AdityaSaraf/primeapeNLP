@@ -1,0 +1,3 @@
+Rugby league star Greg Bird has been slapped with a $ 200 criminal infringement notice for allegedly urinating on a police vehicle , just a day after his wedding .
+The Gold Coast Titans player faced the allegations of offensive behaviour after an incident in the popular holiday spot , Byron Bay .
+Greg Bird has been issued a criminal infringement notice according to police after an alleged incident on the NSW coastal town of Byron Bay

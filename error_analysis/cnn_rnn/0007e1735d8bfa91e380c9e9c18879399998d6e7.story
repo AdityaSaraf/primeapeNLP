@@ -1,0 +1,3 @@
+Caryn and Bryan Canatella , who run a wedding videography business in Austin , Texas , decided to use their love of film and unleash their baby news via DVD .
+They created a short film showing a montage of family clips , which comes to an abrupt end before script on screen reads &apos; but wait ...
+A very special present : Caryn and Bryan Canatella , who run a wedding videography business in Austin , Texas , decided to use their love of film and unleash their baby news via DVD - Caryn &apos;s mother is pictured here

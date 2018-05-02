@@ -1,0 +1,3 @@
+According to a National Park Service press release , the body of a woman that was spotted in the Colorado River March 21 has been identified as Kaitlin Anne Kenney .
+Worst fear confirmed : Officials have announced that the body found in the Colorado River in late March is that of Kaitlin Anne Kenney , 21 , who went missing in January
+Gone : Kenny was rafting through the Grand Canyon &apos;s waterways when she vanished without a trace

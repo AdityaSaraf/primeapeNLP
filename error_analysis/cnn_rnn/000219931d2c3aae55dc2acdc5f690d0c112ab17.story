@@ -1,0 +1,3 @@
+Una Crown , 86 , was repeatedly stabbed in the neck and then set on fire in the horrific attack at the bungalow where she lived alone .
+But detectives , paramedics and firefighters trampled through her home , ‘ severely contaminating ’ the murder scene , after concluding that she had somehow set herself alight after falling on her cooker .
+Police had found the body of the retired postmistress , pictured with late husband Jack Roland Crown , covered in blood and with her clothing &apos; burnt to a crisp &apos; in the hallway

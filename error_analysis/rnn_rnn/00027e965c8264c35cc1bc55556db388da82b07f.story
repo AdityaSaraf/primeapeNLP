@@ -1,0 +1,3 @@
+Kansas City , Missouri ( CNN ) -- The General Services Administration , already under investigation for lavish spending , allowed an employee to telecommute from Hawaii even though he is based at the GSA &apos;s Kansas City , Missouri , office , a CNN investigation has found .
+It cost more than $ 24,000 for the business development specialist to travel to and from the mainland United States over the past year .
+He is among several hundred GSA &quot; virtual &quot; workers who also travel to various conferences and their home offices , costing the agency millions of dollars over the past three years .

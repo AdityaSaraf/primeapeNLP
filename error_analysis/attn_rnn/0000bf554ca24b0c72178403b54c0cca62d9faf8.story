@@ -1,0 +1,3 @@
+Nicholas Levene , 48 , was jailed for 13 years last November after he admitted orchestrating a lucrative Ponzi scheme which raked in £ 316million .
+Must pay £ 1 : Jailed city trader Nicholas Levene ( pictured arriving at court in November last year ) , who conned wealthy investors out of £ 316million , was ordered to pay the nominal sum because he is bankrupt
+Jailed : Levene , nicknamed Beano because of his love of the comic ( pictured left on the trading floor in 1990 , and right with wife Tracy ) , was jailed for 13 years in November last year

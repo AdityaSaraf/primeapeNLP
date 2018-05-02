@@ -1,0 +1,3 @@
+Los Angeles ( CNN ) -- A medical doctor in Vancouver , British Columbia , said Thursday that California arson suspect Harry Burkhart suffered from severe mental illness in 2010 , when she examined him as part of a team of doctors .
+Blaga Stancheva , a family physician and specialist in obstetrics , said both Burkhart and his mother , Dorothee , were her patients in Vancouver while both were applying for refugee status in Canada .
+&quot; I was asked to diagnose and treat Harry to support a claim explaining why he was unable to show up in a small-claims court case , &quot; Stancheva told CNN in a phone interview .

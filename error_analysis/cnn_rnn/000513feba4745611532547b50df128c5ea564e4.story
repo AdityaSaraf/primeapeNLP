@@ -1,0 +1,3 @@
+Alderman Antonio French said he does not believe Wilson &apos;s story of what happened in Ferguson that night in August when Michael Brown was shot dead
+Former Ferguson police officer Darren Wilson was &apos; remorseless , cold , &apos; in his account of how he shot and killed unarmed 18-year-old Michael Brown in August , a St Louis politician has claimed .
+On Sunday , Darren Wilson &apos;s lawyer revealed that the police officer had chosen to resign without severance pay after being made aware of threats that his fellow officers would be harmed if he stayed in the force .

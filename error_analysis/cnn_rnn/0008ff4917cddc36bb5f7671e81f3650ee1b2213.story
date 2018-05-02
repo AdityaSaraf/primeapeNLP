@@ -1,0 +1,3 @@
+Revealing satellite images show how Syria has been flooded with darkness since the beginning of the civil war with 83 per cent of the country &apos;s lights being extinguished since 2011 .
+Then : A satellite picture taken of Syria before civil war began in 2011 shows the country &apos;s major cities emitting a dense cluster of lights at night
+Now : Four years later and 83 per cent of the country &apos;s night-time light has disappeared due to destruction , power shortages and people fleeing their homes

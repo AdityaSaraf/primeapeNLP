@@ -1,0 +1,3 @@
+Incredible footage has surfaced of a Queensland man feeding a kookaburra directly from his mouth .
+The vision , which comes from Mudgeeraba in southeast Queensland , shows the buoyant bird dangling by the strip of meat as the man holds his hands to protect the bird if it falls .
+The video begins with the man standing on a balcony saying to the camera : ‘ feeding the Kookaburras … Mudgeeraba style ’

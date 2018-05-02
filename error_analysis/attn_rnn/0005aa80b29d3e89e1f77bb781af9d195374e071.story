@@ -1,0 +1,3 @@
+She is yet to make her screen debut , but Cressida Bonas already appears to be completely at home at the glitzy Hollywood parties of the awards season .
+Prince Harry ’ s former girlfriend , 25 , was seen mixing with the movie world ’ s A-list as part of the British contingent in Los Angeles ahead of the Golden Globes last night .
+It is being produced by influential movie mogul Harvey Weinstein , who has been singing the aspiring actress ’ s praises .

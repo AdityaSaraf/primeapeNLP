@@ -1,0 +1,3 @@
+( CNN ) -- Usain Bolt rounded off the world championships Sunday by claiming his third gold in Moscow as he anchored Jamaica to victory in the men &apos;s 4x100m relay .
+The U.S finished second in 37.56 seconds with Canada taking the bronze after Britain were disqualified for a faulty handover .
+The 26-year-old Bolt has now collected eight gold medals at world championships , equaling the record held by American trio Carl Lewis , Michael Johnson and Allyson Felix , not to mention the small matter of six Olympic titles .

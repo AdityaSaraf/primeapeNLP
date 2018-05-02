@@ -1,0 +1,3 @@
+Handed 15-month supervision order and 10-year ASBO banning him from possession of flares or fireworks not commercially available
+Hobby : Paul Smith &apos;s 10-year habit of making DIY bombs in a workshop at his parent &apos;s house in East Hull came to an end in April when neighbours got sick of his explosions setting off their car alarms
+Recognition : Unemployed drug user Smith set off so many of his homemade devices that this year his family bought him a bomb-shaped cake for his 40th birthday

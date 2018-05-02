@@ -1,0 +1,3 @@
+A hiker was arrested and warned she could face jail after freeing an eagle from a trap and springing three more traps to protect other animals .
+Kathleen Adair , 39 , was walking her three dogs up Davies Creek Trail in Alaska on Christmas Eve when she spotted the bird with each leg shut inside traps .
+Arrested : Kathleen Adair , 39 , was charged with hindering lawful trapping after snaring three traps in Alaska

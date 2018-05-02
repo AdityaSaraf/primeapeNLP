@@ -1,0 +1,3 @@
+While Labor Day is the unofficial end of summer , it &apos;s also the unofficial start to the campaign season .
+That means politicking will be on the rise , especially as control of the Senate is at stake as well as control of 36 state houses .
+In fact , Elizabeth Wilner , senior vice president of Kantar Ad Intelligence , says as much as $ 3.4 billion is going to be spent on advertising this midterm season .

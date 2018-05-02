@@ -1,0 +1,3 @@
+Gaza City ( CNN ) -- An Italian humanitarian activist and journalist who was kidnapped in Gaza has been found dead and one person is in custody , the Hamas Interior Ministry said Friday in a statement .
+Police investigating the case learned where 36-year-old Vittorio Arrigoni was being held and went to the location , where they found the body , the statement said .
+An autopsy revealed that he had been killed hours before police entered the location , it said .

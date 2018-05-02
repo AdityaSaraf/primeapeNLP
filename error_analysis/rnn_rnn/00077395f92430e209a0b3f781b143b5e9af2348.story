@@ -1,0 +1,3 @@
+Multi-millionaire Philip Shirley is by many measures the most impeccably bred landowner in the country
+In 40 acres of parkland and filled with suits of armour , oil paintings and a selection of resident ghosts , the stately home is the family seat of 58-year-old Philip Shirley .
+You probably haven &apos;t heard of Mr Shirley , a tall , somewhat shy accountant with a wife and four children , who inherited a large tranche of Warwickshire on the death of his father , Major John , in 2009 .

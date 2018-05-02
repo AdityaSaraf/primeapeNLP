@@ -1,0 +1,3 @@
+There are few obvious similarities between superstar Chelsea midfielder Eden Hazard and Hull &apos;s Scottish keeper Allan McGregor but both share the honour of being penalty perfectionists .
+Hazard is understandably confident from the spot , having scored 17 goals from 17 attempts in domestic competition for Chelsea and his previous club Lille - but David Meyler says McGregor is the man to stop the Belgian should he get the chance on Saturday at Stamford Bridge .
+The former Rangers keeper has been impenetrable from 12 yards since his move to Hull , saving three penalties starting with Frank Lampard &apos;s effort in last season &apos;s opener against Chelsea .

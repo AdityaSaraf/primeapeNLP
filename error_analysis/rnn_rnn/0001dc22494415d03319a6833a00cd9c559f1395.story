@@ -1,0 +1,3 @@
+Researchers carried out the largest ever comparative study of stone tools between 130,000 and 75,000 years old to shed new light on our ancestors .
+Researchers carried out the largest ever comparative study of stone tools dating between 130,000 and 75,000 years old to shed new light on our ancestors .
+‘ This is the first time that scientists have identified that early modern humans at the cusp of dispersal out of Africa were grouped in separate , isolated and local populations , ’ Dr Eleanor Scerri , visiting scholar at the University of Oxford and lead author of the study said .

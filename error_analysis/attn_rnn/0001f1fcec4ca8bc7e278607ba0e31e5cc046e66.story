@@ -1,0 +1,3 @@
+Senior Pakistan batsman Younus Khan , who capped a memorable test against Australia in Dubai with hundreds in both innings , said he had thought of skipping the two-match series after being dropped from the 50-over squad .
+The former captain , who will turn 37 next month , had criticised the selectors and the Pakistan Cricket Board ( PCB ) after being dropped for the ODI series against Australia .
+And on Sunday he refused to give credit to the board or the selectors and only thanked Zimbabwean Grant Flower , the team &apos;s batting coach , and trainer Grant Ludan for his stellar performance .
