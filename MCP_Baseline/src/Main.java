@@ -41,7 +41,8 @@ public class Main {
     static List<String> stopWords = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-        File directory = new File("sample_extracted");
+        long startTime = System.currentTimeMillis();
+        File directory = new File("extracted_10k");
         File[] files = directory.listFiles();
 
         File stopWordFile = new File("stopwords.txt");
@@ -58,12 +59,20 @@ public class Main {
                 documents.add(parseFile(file));
             }
         }
+        List<List<String>> documentSentences = new ArrayList<>();
+        for (LabelledDocument document : documents) {
+            documentSentences.add(document.filteredSentences);
+        }
+
+        TFIDF tfidf = new TFIDF(documentSentences);
+        MCPSolver mcpSolver = new MCPSolver(tfidf);
 
         double total = 0;
         int wc = 0;
         for (LabelledDocument document : documents) {
-            Set<Integer> generatedSummary = MCPSolver.simpleGreedy(document.filteredSentences, document.lengthSummary);
-//            Set<Integer> generatedSummary = MCPSolver.unweightedILP(document.originalSentences, document.lengthSummary);
+//            Set<Integer> generatedSummary = mcpSolver.simpleGreedy(document.filteredSentences, document.lengthSummary);
+//            Set<Integer> generatedSummary = mcpSolver.unweightedILP(document.filteredSentences, document.lengthSummary);
+            Set<Integer> generatedSummary = mcpSolver.weightedILP(document.filteredSentences, document.lengthSummary);
             List<String> systemSummary = new ArrayList<>();
             List<String> gsSummary = new ArrayList<>();
             for (Integer i : generatedSummary) {
@@ -73,7 +82,7 @@ public class Main {
             for (int i : document.answerNums) {
                 gsSummary.add(document.originalSentences.get(i));
             }
-            double rougeScore = test(systemSummary, document.abstractiveSentences);
+            double rougeScore = test(systemSummary, gsSummary);
             total += rougeScore;
             System.out.println(rougeScore);
 //             prints the generated summary
@@ -85,13 +94,14 @@ public class Main {
             PrintWriter writer = new PrintWriter(outputFile);
             for (int i : generatedSummary) {
                 String sent = document.originalSentences.get(i);
-                System.out.println(sent);
+//                System.out.println(sent);
                 writer.println(sent);
             }
             writer.flush();
         }
         System.out.println("wc = " + wc);
         System.out.println("Average: " + total/documents.size());
+        System.out.println("Time elapsed (ms): " + (System.currentTimeMillis() - startTime));
 
     }
 
@@ -115,7 +125,7 @@ public class Main {
         s.add(gs);
         RougeN rouge = new RougeN(sysSum, s, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, 'A', 0.5);
         Map<ScoreType, Double> results = rouge.computeNGramScore();
-        return results.get(ScoreType.F);
+        return results.get(ScoreType.R);
     }
 
     private static void populateStopWordList(File file) throws FileNotFoundException {
