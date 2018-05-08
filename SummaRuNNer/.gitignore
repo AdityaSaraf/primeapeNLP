@@ -4,6 +4,10 @@ __pycache__
 data/*
 !data/.placeholder
 
+outputs/rnn_rnn10/*
+outputs/cnn_rnn10/*
+outputs/attn_rnn10/*
+
 outputs/rnn_rnn/*
 !outputs/rnn_rnn/.placeholder
 
