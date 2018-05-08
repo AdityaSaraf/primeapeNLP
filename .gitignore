@@ -5,9 +5,9 @@ cnn_stories/
 dailymail_stories/
 data/
 extracted/
-error_analysis/*10
-error_analysis/ref
-error_analysis/mcp
+error_analysis/*10/*.story
+error_analysis/ref/*.story
+error_analysis/mcp/*.story
 *.iml
 glove/
 *.pyc
