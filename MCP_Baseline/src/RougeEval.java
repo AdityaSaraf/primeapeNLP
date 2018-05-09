@@ -13,7 +13,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class RougeEval {
-    static final String generatedPath = "error_analysis/attn_rnn10";
+    static final String generatedPath = "error_analysis/mcp10";
     static final String dataPath = "extracted_10k";
     public static void main(String[] args) throws FileNotFoundException {
         FilenameFilter storyFilter = (dir, name) -> {

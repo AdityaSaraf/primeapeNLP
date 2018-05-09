@@ -48,7 +48,7 @@ public class Main {
         File stopWordFile = new File("stopwords.txt");
         populateStopWordList(stopWordFile);
 
-        File outputDir = new File("sample_extracted_mcp_summs");
+        File outputDir = new File("error_analysis/mcp10");
         if (!outputDir.exists()) {
             outputDir.mkdir();
         }
@@ -69,10 +69,15 @@ public class Main {
 
         double total = 0;
         int wc = 0;
-        for (LabelledDocument document : documents) {
-//            Set<Integer> generatedSummary = mcpSolver.simpleGreedy(document.filteredSentences, document.lengthSummary);
-//            Set<Integer> generatedSummary = mcpSolver.unweightedILP(document.filteredSentences, document.lengthSummary);
-            Set<Integer> generatedSummary = mcpSolver.weightedILP(document.filteredSentences, document.lengthSummary);
+        for (int i1 = 0; i1 < documents.size(); i1++) {
+            LabelledDocument document = documents.get(i1);
+            if (i1 % 250 == 0) {
+                System.out.println("Finished with "+i1);
+                System.out.println("Time elapsed: "+(System.currentTimeMillis() - startTime));
+            }
+            //            Set<Integer> generatedSummary = mcpSolver.simpleGreedy(document.filteredSentences, document.lengthSummary);
+            //            Set<Integer> generatedSummary = mcpSolver.unweightedILP(document.filteredSentences, document.lengthSummary);
+            Set<Integer> generatedSummary = mcpSolver.weightedILP(document.filteredSentences, 3);
             List<String> systemSummary = new ArrayList<>();
             List<String> gsSummary = new ArrayList<>();
             for (Integer i : generatedSummary) {
@@ -84,20 +89,20 @@ public class Main {
             }
             double rougeScore = test(systemSummary, gsSummary);
             total += rougeScore;
-            System.out.println(rougeScore);
-//             prints the generated summary
-//            File outputFile = new File(outputDir, document.fileName);
-//            if (outputFile.exists()) {
-//                outputFile.delete();
-//            }
-//            outputFile.createNewFile();
-//            PrintWriter writer = new PrintWriter(outputFile);
-//            for (int i : generatedSummary) {
-//                String sent = document.originalSentences.get(i);
-////                System.out.println(sent);
-//                writer.println(sent);
-//            }
-//            writer.flush();
+            //            System.out.println(rougeScore);
+            //             prints the generated summary
+            File outputFile = new File(outputDir, document.fileName);
+            if (outputFile.exists()) {
+                outputFile.delete();
+            }
+            outputFile.createNewFile();
+            PrintWriter writer = new PrintWriter(outputFile);
+            for (int i : generatedSummary) {
+                String sent = document.originalSentences.get(i);
+                //                System.out.println(sent);
+                writer.println(sent);
+            }
+            writer.flush();
         }
         System.out.println("wc = " + wc);
         System.out.println("Average: " + total/documents.size());

@@ -9,9 +9,11 @@ import java.util.Scanner;
 
 public class Main {
 
+    // first model is neural, second combinatorial
     static final String firstModel_path = "error_analysis/attn_rnn10";
     static final String secondModel_path = "sample_extracted_mcp_summs";
-    static final String data_path = "extracted_10k";
+    static final String firstModelDataPath = "sample_10k_tok";
+    static final String secondModelDataPath = "extracted_10k";
     public static void main(String[] args) throws FileNotFoundException {
         FilenameFilter storyFilter = (dir, name) -> {
             String lowercaseName = name.toLowerCase();
@@ -19,7 +21,8 @@ public class Main {
         };
         File firstModel_dir = new File(firstModel_path);
         File secondModel_dir = new File(secondModel_path);
-        File dataDir = new File(data_path);
+        File secondModelDataDir = new File(secondModelDataPath);
+        File firstModelDataDir = new File(firstModelDataPath);
         File[] firstModel_files = firstModel_dir.listFiles(storyFilter);
         System.out.println(firstModel_files.length);
         File[] secondModel_files = secondModel_dir.listFiles(storyFilter);
@@ -28,18 +31,19 @@ public class Main {
             File firstModel = firstModel_files[i];
             List<String> first_summ = parseFile(firstModel);
             String name = firstModel.getName();
-            Object[] rets = getSumms(new File(dataDir, name));
+            Object[] rets = getSumms(new File(secondModelDataDir, name));
             List<String> absSum = (List<String>) rets[0];
-            HashSet<String> extSum = (HashSet<String>) rets[1];
+            HashSet<String> extSum2 = (HashSet<String>) rets[1];
             List<String> origSum = (List<String>) rets[2];
             File secondModel = new File(secondModel_dir, name);
             List<String> second_summ = parseFile(secondModel);
+            HashSet<String> extSum1 = (HashSet<String>) getSumms(new File(firstModelDataDir, name))[1];
 
-            int firstCorrect = numCorrect(first_summ, extSum);
-            int secondCorrect = numCorrect(second_summ, extSum);
+            int firstCorrect = numCorrect(first_summ, extSum1);
+            int secondCorrect = numCorrect(second_summ, extSum2);
             
             if (Math.abs(firstCorrect - secondCorrect) >= 2) {
-                System.out.println("-----------------------\nExtractive Summary:");
+                System.out.println("-----------------------\nIteration: " + i + ", Extractive Summary for File :" + name);
                 for (String sentence : origSum) {
                     System.out.println(sentence);
                 }
