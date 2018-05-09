@@ -86,18 +86,18 @@ public class Main {
             total += rougeScore;
             System.out.println(rougeScore);
 //             prints the generated summary
-            File outputFile = new File(outputDir, document.fileName);
-            if (outputFile.exists()) {
-                outputFile.delete();
-            }
-            outputFile.createNewFile();
-            PrintWriter writer = new PrintWriter(outputFile);
-            for (int i : generatedSummary) {
-                String sent = document.originalSentences.get(i);
-//                System.out.println(sent);
-                writer.println(sent);
-            }
-            writer.flush();
+//            File outputFile = new File(outputDir, document.fileName);
+//            if (outputFile.exists()) {
+//                outputFile.delete();
+//            }
+//            outputFile.createNewFile();
+//            PrintWriter writer = new PrintWriter(outputFile);
+//            for (int i : generatedSummary) {
+//                String sent = document.originalSentences.get(i);
+////                System.out.println(sent);
+//                writer.println(sent);
+//            }
+//            writer.flush();
         }
         System.out.println("wc = " + wc);
         System.out.println("Average: " + total/documents.size());
