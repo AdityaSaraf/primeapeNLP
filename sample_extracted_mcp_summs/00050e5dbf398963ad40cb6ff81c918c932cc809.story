@@ -1,3 +1,0 @@
-But Sylvester Stallone's nephew has blasted the actor, accusing him of being to blame as he continually neglected the 36-year-old who was found dead at his Hollywood Hills home on Friday from an apparent overdose.
-In a posting where the 18-year-old slammed the 66-year-old Rambo star's current wife Jennifer Flavin, he also said the action man had cut Sage out of his life, devastating the aspiring filmmaker.
-On Sunday night, Sylvester issued a statement asking 'people to respect my talented son's memory and feel compassion for his loving mother Sasha,' and for the media to stop 'the speculation and questionable reporting.'

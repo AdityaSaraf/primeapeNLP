@@ -1,3 +1,0 @@
-Meanwhile, Democrats, backed by labor unions, are again fighting to defeat Walker -- they forced a recall two years ago that Walker won -- to move forward on more Democratic economic policies, including lifting the minimum wage.
-Walker, who is also being investigated for alleged illegal campaign coordination with outside groups, is considered a potential 2016 Republican presidential candidate, but if he loses his gubernatorial race, his path to the presidency will be very, very narrow.
-The Republican leader of the Senate, Mitch McConnell, is in a fight for his political life against Alison Lundergan Grimes, a relatively inexperienced Democratic politician who was just 8 years old when McConnell started his first term in the Senate in 1985.

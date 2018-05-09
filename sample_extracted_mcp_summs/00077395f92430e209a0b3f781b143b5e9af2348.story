@@ -1,3 +1,0 @@
-Some of the building applications go back to 2010, when the Government altered planning law to require every local authority to create a 'core strategy' outlining where an allotted number of new homes should be built in the coming years.
-But three years after it came into operation, 178 of the country's 327 district councils still haven't managed to complete their 'core strategy' — temporarily giving developers carte blanche to build on almost any rural land they can buy.
-I understand that Mr Shirley has not actually sold the field yet, but instead granted Charles Church Homes a legally binding 'option' to buy it, for several million pounds, provided planning permission is granted.

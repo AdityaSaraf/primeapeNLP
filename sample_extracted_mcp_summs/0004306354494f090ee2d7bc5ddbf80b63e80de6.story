@@ -1,3 +1,0 @@
-peacekeepers remained in Ivory Coast after the 2010 presidential election, when the country was thrown into crisis after incumbent President Laurent Gbagbo refused to acknowledge defeat to former Prime Minister Alassane Ouattara.
-According to the United Nations, its peacekeeping force in Ivory Coast as of April 30 included nearly 11,000 uniformed personnel, as well as several hundred international civilian personnel, local staff and volunteers.
-Sylvie van den Wildenberg, in a telephone interview from her office in Abidjan, said the remaining forces were continuing to protect area residents, "who are living in a very difficult terrain -- their villages scattered."

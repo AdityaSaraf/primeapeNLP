@@ -1,4 +1,0 @@
-‘This model of our population history supports other theories recently put forward that modern humans may have first successfully left Africa earlier than 60,000-50,000 years ago, which had been the common view among scholars.
-The team also mapped out known ancient rivers and major lakes so they could piece together where populations made and used their tools, according to the study, which is published in the journal Quaternary Science Reviews.
-‘This is the first time that scientists have identified that early modern humans at the cusp of dispersal out of Africa were grouped in separate, isolated and local populations,’ Dr Eleanor Scerri, visiting scholar at the University of Oxford and lead author of the study said.
-‘Our picture of modern human demography around 100,000 years ago is that there were a number of populations, varying in size and degree of genetic contact, distributed over a wide geographical area.

@@ -1,4 +1,0 @@
-Hazard is understandably confident from the spot, having scored 17 goals from 17 attempts in domestic competition for Chelsea and his previous club Lille - but David Meyler says McGregor is the man to stop the Belgian should he get the chance on Saturday at Stamford Bridge.
-The former Rangers keeper has been impenetrable from 12 yards since his move to Hull, saving three penalties starting with Frank Lampard's effort in last season's opener against Chelsea.
-Since then he's saved a penalty from QPR's Charlie Austin and last week he was hailed Hull's hero as his stop from West Brom's Graham Dorrans helped Steve Bruce's side salvage a scoreless draw.
-Meyler's no doubt happy to have the 32-year-old on his side after he famously saved Georgios Samaras's penalty late in the season in 2011 in an undoubted turning point in that year's Scottish title that went the way of Rangers.
