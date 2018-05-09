@@ -1,6 +1,7 @@
 .idea/
 *.tgz
 sample_10k/
+sample_10k_tok/*.story
 cnn_stories/
 dailymail_stories/
 data/
